@@ -17,15 +17,7 @@ public class PDFManager {
     String filename = "";
 
 
-    public PDFManager() {
-        try {
-            readPDF();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void readPDF() throws IOException {
+    public void readPDF() throws IOException {
         try (PDDocument document = PDDocument.load(new File((path + "/" + filename)))) {
 
             document.getClass();
