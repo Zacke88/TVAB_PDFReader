@@ -18,7 +18,8 @@ public class PDFManager {
     String pdfExtension =".pdf";
     String textFile = "rapport.txt";
     String period = "";
-    int spaces = 20;
+    String countString = "";
+    int spaces = 21;
     StringBuffer dataString = new StringBuffer();
     ArrayList array = new ArrayList<String>();
 
@@ -29,6 +30,7 @@ public class PDFManager {
         String string;
         Boolean readData = false;
         Boolean dataLine = false;
+        int count = 0;
         PDFTextStripper stripper = new PDFTextStripper();
         BufferedReader reader = new BufferedReader(
                 new StringReader(stripper.getText(PDDocument.load(pdf))));
@@ -53,6 +55,13 @@ public class PDFManager {
                 if(readData) {
                     dataString.append(string);
                     dataString.append(" ");
+
+                    count += string.length() - string.replaceAll(" ", "").length() + 1;
+
+                    if(count == spaces) {
+                        dataString.append("\n");
+                        count = 0;
+                    }
                 }
 
                 if(string.contains("30 min")) {
@@ -72,19 +81,15 @@ public class PDFManager {
 
         PrintWriter out = new PrintWriter(new FileWriter(textFile, true));
         String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+        out.println("NY FIL INLÄST");
         out.println(date);
+        out.println();
         out.println("Data:");
         out.println(dataString);
         out.println("Perioder över gräns:");
         out.println(period);
-        out.println("");
+        out.println();
         out.close();
 
-    }
-
-    public void formatDataString() {
-        String string = String.valueOf(dataString);
-        String parsedStr = string.replaceAll("(.{44})", "$1\n");
-        System.out.println(parsedStr);
     }
 }
