@@ -2,6 +2,8 @@
   <library name="pdfbox-2.0.7">
     <CLASSES>
       <root url="jar://$USER_HOME$/Downloads/pdfbox-2.0.7.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/commons-logging-1.2-bin/commons-logging-1.2/commons-logging-1.2.jar!/" />
+      <root url="jar://$USER_HOME$/Downloads/fontbox-2.0.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
