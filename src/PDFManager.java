@@ -5,11 +5,10 @@
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringReader;
+import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 
 public class PDFManager {
@@ -17,15 +16,17 @@ public class PDFManager {
     String path = "C:/Users/zakri/Desktop/pdf/";
     String filename = "AvfallAllaP3";
     String pdfExtension =".pdf";
+    String textFile = "rapport.txt";
     String period = "";
+    int spaces = 20;
+    StringBuffer dataString = new StringBuffer();
     ArrayList array = new ArrayList<String>();
 
 
     public void readPDF() throws IOException {
 
         File pdf = new File(path+filename+pdfExtension);
-        String string = "";
-        StringBuffer dataString = new StringBuffer();
+        String string;
         Boolean readData = false;
         Boolean dataLine = false;
         PDFTextStripper stripper = new PDFTextStripper();
@@ -65,7 +66,25 @@ public class PDFManager {
         }
     }
 
-    public void saveToExcel() {
+    public void saveToExcel() throws IOException {
 
+        //formatDataString();
+
+        PrintWriter out = new PrintWriter(new FileWriter(textFile, true));
+        String date = new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date());
+        out.println(date);
+        out.println("Data:");
+        out.println(dataString);
+        out.println("Perioder över gräns:");
+        out.println(period);
+        out.println("");
+        out.close();
+
+    }
+
+    public void formatDataString() {
+        String string = String.valueOf(dataString);
+        String parsedStr = string.replaceAll("(.{44})", "$1\n");
+        System.out.println(parsedStr);
     }
 }
